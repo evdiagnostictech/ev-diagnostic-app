@@ -1,0 +1,4 @@
+code,description,severity
+P0A80,Replace Hybrid Battery Pack,High
+P0A7F,Battery Capacity Low,Medium
+P0AFA,Voltage System Isolation Fault,High

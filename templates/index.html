@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EV Diagnostic System</title>
+
+    <style>
+
+        body {
+            background: radial-gradient(circle at top, #1a1a1a, #0b0b0b);
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #00bfff;
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            color: #888;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #151515;
+            border: 1px solid #2a2a2a;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+            margin-top: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #0f0f0f;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #00bfff, #0066ff);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .label {
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .section-title {
+            margin-top: 15px;
+            color: #00bfff;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>EV Diagnostic System</h1>
+    <p class="subtitle">Battery & Fault Analysis Tool</p>
+
+    <div class="card">
+
+        <form method="POST">
+
+            <div class="label">Fault Code</div>
+            <input type="text" name="code" placeholder="e.g. P0A80">
+
+            <div class="label">Battery Voltage</div>
+            <input type="number" name="voltage" placeholder="e.g. 280">
+
+            <div class="label">Battery Temperature</div>
+            <input type="number" name="temperature" placeholder="e.g. 42">
+
+            <div class="label">Charge Cycles</div>
+            <input type="number" name="cycles" placeholder="e.g. 1800">
+
+            <button type="submit">Run Diagnostic</button>
+
+        </form>
+
+    </div>
+
+    {% if result %}
+
+    {% if result.graph %}
+    <h3>Battery Trend</h3>
+    <img src="{{ result.graph }}" width="400">
+{% endif %}
+
+    <div class="card">
+
+        {% if result.error %}
+            <p>{{ result.error }}</p>
+        {% else %}
+
+        {% if result.graph %}
+    <h3>Battery Trend</h3>
+    <img src="{{ result.graph }}" width="400">
+{% endif %}
+
+<a href="/static/report.pdf" download>
+    <button>Download PDF Report</button>
+</a>
+    
+
+            <h2>Diagnostic Report</h2>
+
+            <p><b>Code:</b> {{ result.code }}</p>
+            <p><b>Description:</b> {{ result.description }}</p>
+            <p><b>Severity:</b> {{ result.severity }}</p>
+            <p><b>Diagnosis:</b> {{ result.diagnosis }}</p>
+            <p><b>Battery Health:</b> {{ result.battery_health }}</p>
+
+            <div class="section-title">Likely Causes</div>
+            <ul>
+                {% for cause in result.causes %}
+                    <li>{{ cause }}</li>
+                {% endfor %}
+            </ul>
+
+            <div class="section-title">Recommended Actions</div>
+            <ul>
+                {% for action in result.actions %}
+                    <li>{{ action }}</li>
+                {% endfor %}
+            </ul>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+
+<h3>AI Diagnostic Insight</h3>
+<p>{{ result.ai_explanation }}</p>
+
+<h3>Battery Trend</h3>
+<img src="{{ result.graph }}" width="400">
+
+<a href="{{ result.pdf }}" download>
+    <button>Download PDF Report</button>
+</a>
