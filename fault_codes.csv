@@ -1,4 +1,21 @@
-code,description,severity
-P0A80,Replace Hybrid Battery Pack,High
-P0A7F,Battery Capacity Low,Medium
-P0AFA,Voltage System Isolation Fault,High
+code,description,severity,causes,actions
+P0A80,Drive Battery Pack Deterioration,High,"Battery cell degradation;Excessive charge cycles;Thermal damage","Replace degraded battery modules;Run full battery diagnostic;Inspect cell voltage balance;Check thermal management system"
+P0A7A,Drive Battery Pack State of Health Low,High,"Capacity loss below threshold;Cell imbalance;BMS calibration error","Perform battery capacity test;Recalibrate BMS;Inspect individual cell voltages;Consider battery replacement"
+P0A78,Drive Motor Inverter Performance,High,"IGBT transistor failure;Coolant leak in inverter;Overtemperature event","Inspect inverter cooling circuit;Test IGBT modules;Check DC bus voltage;Replace inverter if damaged"
+P0A09,DC/DC Converter Performance,High,"DC/DC converter overload;12V battery drain;High voltage isolation fault","Test 12V auxiliary battery;Inspect DC/DC converter output;Check high voltage connections;Verify isolation resistance"
+P0AFA,High Voltage Battery Voltage Low,High,"Deep discharge event;Cell failure;High resistance connection","Charge battery immediately;Inspect HV cable connections;Test individual modules;Check contactor operation"
+P0AC0,Drive Motor A Performance,High,"Stator winding fault;Resolver signal error;Bearing wear","Inspect motor windings;Check resolver connector;Measure phase resistance;Verify motor cooling"
+P0A3A,Generator/Motor A Resolver Circuit,Medium,"Resolver wiring damage;Connector corrosion;Signal interference","Inspect resolver wiring harness;Clean resolver connector pins;Test resolver output signal;Check shielding"
+P0AA6,Hybrid Battery Voltage System Isolation Fault,High,"Coolant intrusion in HV system;Cable insulation damage;Connector moisture","Run isolation resistance test;Inspect HV wiring for damage;Check HV connectors for moisture;Verify battery enclosure seal"
+P0A94,DC/DC Converter Circuit Low,Medium,"Weak 12V battery;DC/DC converter efficiency loss;High load on 12V system","Test 12V battery health;Measure DC/DC output voltage;Reduce 12V accessory load;Inspect converter connections"
+P0A1F,Battery Energy Control Module,Medium,"BMS firmware error;CAN bus communication fault;Sensor calibration drift","Update BMS firmware;Check CAN bus wiring;Recalibrate temperature sensors;Inspect BMS connectors"
+P0A7F,Battery Pack Voltage Sense Circuit,Medium,"Voltage sensor fault;Wiring harness damage;BMS internal fault","Test voltage sensing circuit;Inspect wiring between BMS and modules;Replace faulty voltage sensor;Check BMS power supply"
+P1E00,Hybrid/EV Powertrain Control System,Medium,"Powertrain ECU communication error;Software fault;CAN bus timeout","Perform ECU reset;Update powertrain software;Check CAN bus integrity;Inspect ECU connectors"
+P0A5A,Drive Motor A Temperature Sensor Circuit,Medium,"Temperature sensor open circuit;Connector corrosion;Sensor out of range","Test NTC sensor resistance;Inspect sensor wiring;Clean connector;Replace sensor if out of spec"
+P0A93,Inverter Cooling System Performance,Medium,"Coolant pump failure;Low coolant level;Coolant flow restriction","Check coolant level;Test coolant pump operation;Inspect cooling lines for blockage;Bleed cooling circuit"
+P0A2B,Generator/Motor B Current Sensor A Circuit,Low,"Current sensor drift;EMI interference;Loose connector","Recalibrate current sensor;Check sensor connector;Inspect shielding on signal wires;Test sensor output"
+P0A04,Drive Motor A Temperature Sensor High,Low,"Temporary overtemperature;Sensor offset;High ambient temperature","Allow motor to cool;Verify ambient conditions;Check cooling fan operation;Clear code and monitor"
+P0A28,Generator/Motor A Current Sensor Circuit,Low,"Sensor signal noise;Minor wiring issue;Temporary interference","Clear code and monitor;Inspect sensor wiring;Check connector seating;Retest after drive cycle"
+P3000,Battery Control System,Low,"Minor BMS communication glitch;Temporary sensor dropout;Software timeout","Clear code;Run full drive cycle;Monitor for recurrence;Update BMS firmware if recurring"
+P0A02,Drive Motor A Position Sensor Circuit,Low,"Resolver offset;Temporary signal loss;Connector micro-movement","Check resolver connector torque;Clear code;Run motor calibration routine;Monitor resolver signal"
+P0A6A,Hybrid Battery Pack Cooling Fan,Low,"Cooling fan speed below spec;Fan obstruction;Fan motor wear","Inspect battery cooling fan;Remove any obstruction;Test fan motor at full speed;Replace fan if noisy or slow"
