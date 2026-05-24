@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
-    <title>History — {{ vin }}</title>
+    <title>{{ t('history_title') }} — {{ vin }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         body {
@@ -10,9 +10,8 @@
             font-family: Arial, sans-serif;
             padding: 40px;
         }
-        .container { max-width: 860px; margin: auto; }
+        .container { max-width: 960px; margin: auto; }
         h1 { color: #00bfff; margin-bottom: 5px; }
-        h2 { color: #00bfff; margin-top: 0; }
         .card {
             background: #151515;
             border: 1px solid #2a2a2a;
@@ -31,24 +30,9 @@
         .badge-high   { background: #3a0a0a; color: #ff6b6b; border: 1px solid #660000; }
         .badge-medium { background: #2a2000; color: #ffd600; border: 1px solid #665000; }
         .badge-low    { background: #0a2a0a; color: #69f0ae; border: 1px solid #006600; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 13px;
-        }
-        th {
-            color: #00bfff;
-            text-align: left;
-            padding: 10px 8px;
-            border-bottom: 1px solid #2a2a2a;
-        }
-        td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #1a1a1a;
-            color: #ccc;
-            vertical-align: top;
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        th { color: #00bfff; text-align: left; padding: 10px 8px; border-bottom: 1px solid #2a2a2a; }
+        td { padding: 10px 8px; border-bottom: 1px solid #1a1a1a; color: #ccc; vertical-align: top; }
         tr:hover td { background: #1a1a1a; }
         .back-link {
             display: inline-block;
@@ -70,31 +54,65 @@
         }
         .delete-btn:hover { background: #550000; }
         .empty { color: #555; font-size: 14px; margin-top: 15px; }
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 6px;
+        }
+        .lang-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            background: #151515;
+            color: #aaa;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            width: auto;
+            margin: 0;
+        }
+        .lang-btn:hover { border-color: #00bfff; color: #00bfff; opacity: 1; }
+        .lang-btn.active { background: #00bfff; color: black; border-color: #00bfff; }
     </style>
 </head>
 <body>
+
+<!-- Selector de idioma -->
+<div class="lang-switcher">
+    <a class="lang-btn {% if lang == 'es' %}active{% endif %}" href="/lang/es">ES</a>
+    <a class="lang-btn {% if lang == 'en' %}active{% endif %}" href="/lang/en">EN</a>
+</div>
+
 <div class="container">
 
-    <a class="back-link" href="/">← Back to Dashboard</a>
+    <a class="back-link" href="/">{{ t('back') }}</a>
 
-    <h1>Diagnostic History</h1>
-    <p style="color:#888; margin-top:0;">VIN: <b style="color:white;">{{ vin }}</b>
-       &nbsp;·&nbsp; {{ records|length }} record{{ 's' if records|length != 1 else '' }}</p>
+    <h1>{{ t('history_title') }}</h1>
+    <p style="color:#888; margin-top:0;">
+        VIN: <b style="color:white;">{{ vin }}</b>
+        &nbsp;·&nbsp;
+        {{ records|length }}
+        {% if records|length == 1 %}{{ t('records_label') }}{% else %}{{ t('records_label_pl') }}{% endif %}
+    </p>
 
     <div class="card">
         {% if records %}
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Code</th>
-                    <th>Description</th>
-                    <th>Severity</th>
-                    <th>Battery</th>
-                    <th>Voltage</th>
-                    <th>Temp</th>
-                    <th>Cycles</th>
-                    <th>Diagnosis</th>
+                    <th>{{ t('col_date') }}</th>
+                    <th>{{ t('col_code') }}</th>
+                    <th>{{ t('col_desc') }}</th>
+                    <th>{{ t('col_severity') }}</th>
+                    <th>{{ t('col_battery') }}</th>
+                    <th>{{ t('col_voltage') }}</th>
+                    <th>{{ t('col_temp') }}</th>
+                    <th>{{ t('col_cycles') }}</th>
+                    <th>{{ t('col_diagnosis') }}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -106,11 +124,11 @@
                     <td style="max-width:160px;">{{ rec.description }}</td>
                     <td>
                         {% if rec.severity == "High" %}
-                            <span class="badge badge-high">High</span>
+                            <span class="badge badge-high">{{ t('sev_high') }}</span>
                         {% elif rec.severity == "Medium" %}
-                            <span class="badge badge-medium">Medium</span>
+                            <span class="badge badge-medium">{{ t('sev_medium') }}</span>
                         {% else %}
-                            <span class="badge badge-low">Low</span>
+                            <span class="badge badge-low">{{ t('sev_low') }}</span>
                         {% endif %}
                     </td>
                     <td>{{ rec.battery_health }}%</td>
@@ -120,7 +138,7 @@
                     <td>{{ rec.diagnosis }}</td>
                     <td>
                         <form method="POST" action="/delete/{{ rec.id }}"
-                              onsubmit="return confirm('Delete this record?')">
+                              onsubmit="return confirm('{{ t('delete_confirm') }}')">
                             <input type="hidden" name="vin" value="{{ vin }}">
                             <button class="delete-btn" type="submit">✕</button>
                         </form>
@@ -130,7 +148,7 @@
             </tbody>
         </table>
         {% else %}
-        <p class="empty">No diagnostic records found for this VIN.</p>
+        <p class="empty">{{ t('no_records') }}</p>
         {% endif %}
     </div>
 

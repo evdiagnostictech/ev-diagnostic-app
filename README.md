@@ -395,7 +395,7 @@ python app.py
 
 # Author
 
-Developed by:
+Developed by:Oscar Letelier
 
 EV Diagnostic Technician Student & Software-Oriented Automotive Enthusiast
 
