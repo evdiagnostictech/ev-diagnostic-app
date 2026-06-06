@@ -1,0 +1,4 @@
+*.db
+*.pdf
+static/graph*.png
+__pycache__/
