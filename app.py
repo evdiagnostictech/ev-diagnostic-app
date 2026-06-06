@@ -7,7 +7,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -419,6 +419,22 @@ def delete_record(record_id):
     return redirect(url_for("history", vin=vin))
 
 
+# REST API
+@app.route("/api/status")
+def api_status():
+
+    return jsonify({
+        "system": "online",
+        "database": "connected",
+        "vehicles_saved": len(get_all_vins()),
+        "language": get_lang()
+    })
+
+
+@app.route("/api/vins")
+def api_vins():
+
+    return jsonify(get_all_vins())
 # ── Inicio / Start ────────────────────────────────────────────────────────────
 
 init_db()
